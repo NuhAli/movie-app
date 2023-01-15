@@ -9,7 +9,7 @@ export const FormWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
-
+  
   @media screen and (min-width: 768px) {
     height: 100vh;
     justify-content: flex-start;
@@ -30,7 +30,7 @@ export const FormArea = styled.form`
   background: #161d2f;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
   padding: 24px;
 
@@ -94,6 +94,24 @@ export const Button = styled.button`
   color: #ffffff;
   cursor: pointer;
 `;
+
+export const ProviderButton = styled(Button)`
+  background-color: transparent;
+  border: 1px solid #5A698F;
+  transition: all 0.2s ease-in;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    margin-right: 1rem;
+  }
+ 
+  &:hover {
+    background-color: #5A698F;
+    border: 1px solid transparent;
+  }
+`
 
 export const FormText = styled.p`
   font-style: normal;

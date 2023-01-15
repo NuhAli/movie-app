@@ -1,10 +1,22 @@
 import Head from "next/head";
-import React from "react";
+import React, { useEffect } from "react";
 import Form from "../components/forms/form";
 import styles from "../styles/Home.module.css";
 import { FormEnum } from "../components/forms/form-enum";
+import { getSession, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+} from "next";
 
 const SignIn = () => {
+  const { data: session } = useSession();
+  const { status } = useSession();
+
+  const router = useRouter();
+
   return (
     <>
       <Head>

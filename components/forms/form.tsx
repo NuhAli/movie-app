@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import { useSession, signIn } from "next-auth/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FormEnum } from "./form-enum";
+import { DevTool } from "@hookform/devtools";
 import {
   Button,
   FormArea,
@@ -11,56 +13,49 @@ import {
   FormWrapper,
   Highlight,
   Input,
+  ProviderButton,
 } from "./form-style";
 
 interface FormProps {
   type: FormEnum;
 }
 
-interface FormDetails{
+interface FormDetails {
   email: string;
   password: string;
   repeatPassword?: string;
 }
 
 const Form = ({ type }: FormProps) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
-
-  const { register, handleSubmit } = useForm<FormDetails>();
-
-  const onSubmit: SubmitHandler<FormDetails> = (data) => {
-    console.log(data);
-  };
-
-  const handleChange = (e: React.FormEvent<HTMLInputElement>, state: string) => {
-    if (state === "email") {
-      setEmail(e.currentTarget.value);
-    }
-    if (state === "password") {
-      setPassword(e.currentTarget.value);
-    } else {
-      setRepeatPassword(e.currentTarget.value);
-    }
-  };
-
+  const { data: session } = useSession();
+  
   const renderForm = () => {
     if (type === FormEnum.SIGNIN) {
       return (
         <>
           <FormTitle>Login</FormTitle>
-          <Input
-            type={"email"}
-            placeholder={"Email address"}
-            {...register("email", { required: true })}
-          />
-          <Input
-            type={"password"}
-            placeholder={"Password"}
-            {...register("password", { required: true })}
-          />
-          <Button type="submit">Login to your account</Button>
+          <ProviderButton
+            onClick={() => {
+              signIn();
+            }}
+          >
+            <Image
+              src={"/assets/google.png"}
+              width={25}
+              height={25}
+              alt="google-logo"
+            />
+            Sign in with Google
+          </ProviderButton>
+          <ProviderButton onClick={() => signIn()}>
+            <Image
+              src={"/assets/github.png"}
+              width={25}
+              height={25}
+              alt="github-logo"
+            />
+            Sign in with GitHub
+          </ProviderButton>
           <FormText>
             Dont have an account?{" "}
             <Highlight href={"/sign-up"}>Sign Up</Highlight>
@@ -71,22 +66,24 @@ const Form = ({ type }: FormProps) => {
     return (
       <>
         <FormTitle>Sign Up</FormTitle>
-        <Input
-          type={"email"}
-          placeholder={"Email address"}
-          {...register("email", { required: true })}
-        />
-        <Input
-          type={"password"}
-          placeholder={"Password"}
-          {...register("password", { required: true })}
-        />
-        <Input
-          type={"password"}
-          placeholder={"Repeat password"}
-          {...register("repeatPassword", { required: true })}
-        />
-        <Button type="submit">Create an account</Button>
+        <ProviderButton>
+          <Image
+            src={"/assets/google.png"}
+            width={25}
+            height={25}
+            alt="google-logo"
+          />
+          Sign up with Google
+        </ProviderButton>
+        <ProviderButton>
+          <Image
+            src={"/assets/github.png"}
+            width={25}
+            height={25}
+            alt="github-logo"
+          />
+          Sign up with GitHub
+        </ProviderButton>
         <FormText>
           Already have an account?{" "}
           <Highlight href={"/sign-in"}>Login</Highlight>
@@ -105,7 +102,11 @@ const Form = ({ type }: FormProps) => {
           height={25.6}
         />
       </FormIcon>
-      <FormArea onSubmit={handleSubmit(onSubmit)}>{renderForm()}</FormArea>
+      <FormArea>
+        <>
+          {renderForm()}
+        </>
+      </FormArea>
     </FormWrapper>
   );
 };

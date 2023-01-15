@@ -11,16 +11,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import NavBar from "../components/NavBar/nav-bar";
 
-const inter = Inter({ subsets: ["latin"] });
-
-const client = createClient({
-  projectId: "tjqwyy5h",
-  dataset: "production",
-  apiVersion: "2023-01-07",
-  useCdn: false,
-});
-
-export default function Home() {
+export default function BookMark() {
   const { data: session } = useSession();
   const { status } = useSession();
 
