@@ -1,3 +1,3 @@
-import movie from "./movie"
+import media from "./media"
 
-export const schemaTypes = [movie]
+export const schemaTypes = [media]
