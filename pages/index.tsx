@@ -1,14 +1,8 @@
 import Head from "next/head";
-import Image from "next/image";
 import { createClient } from "next-sanity";
-import { FormEnum } from "../components/forms/form-enum";
 import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
-import Form from "../components/forms/form";
-import { signOut, useSession } from "next-auth/react";
-import { Button } from "../components/forms/form-style";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 import NavBar from "../components/NavBar/nav-bar";
 
 const inter = Inter({ subsets: ["latin"] });

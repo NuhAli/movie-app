@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import {
   Nav,
@@ -43,7 +44,7 @@ export const NavBar = () => {
     return data.map((link) => {
       return (
         <NavLink href={link.link} key={uuidv4()}>
-          <Image alt={link.name} src={link.icon} height={16} width={16} />
+          <img alt={link.name} src={link.icon} height={16} width={16} />
         </NavLink>
       );
     });
@@ -71,7 +72,7 @@ export const NavBar = () => {
     <Nav>
       <NavWrapper>
         <NavIcon>
-          <Image
+          <img
             alt="nav-icon"
             src={"/assets/logo.svg"}
             width={25}
@@ -81,7 +82,7 @@ export const NavBar = () => {
         <NavLinks>
           {renderNavLinks()}
           <NavIcon>
-            <Image
+            <img
               alt="search-icon"
               src={"/assets/icon-search.svg"}
               width={16}
@@ -95,7 +96,7 @@ export const NavBar = () => {
           </NavIcon>
         </NavLinks>
         <NavIcon>
-          <Image
+          <img
             alt="nav-icon"
             src={"/assets/image-avatar.png"}
             width={24}
@@ -110,7 +111,7 @@ export const NavBar = () => {
           exit={{ display: "none" }}
         >
           <SearchInputWrapper>
-            <Image
+            <img
               alt="search-icon"
               src={"/assets/icon-search.svg"}
               width={24}
@@ -126,7 +127,7 @@ export const NavBar = () => {
           transition={{ ease: "easeOut", duration: 0.2 }}
         >
           <SearchInputWrapper>
-            <Image
+            <img
               alt="search-icon"
               src={"/assets/icon-search.svg"}
               width={24}
