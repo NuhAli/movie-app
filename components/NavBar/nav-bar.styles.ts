@@ -15,6 +15,7 @@ export const Nav = styled.nav`
   justify-content: center;
   align-items: center;
   padding: 0 16px;
+  z-index: 99999;
 
   @media screen and (min-width: 719px) {
     border-radius: 10px;

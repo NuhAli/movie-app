@@ -1,24 +1,34 @@
 import Head from "next/head";
-import { createClient } from "next-sanity";
-import { Inter } from "@next/font/google";
-import styles from "../styles/Home.module.css";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { createClient } from "next-sanity";
+import IMediaItem from "../components/cards/media-item";
 import NavBar from "../components/NavBar/nav-bar";
+import styles from "../styles/Home.module.css";
+import { GetServerSideProps, GetServerSidePropsResult } from "next";
+import { Card, CardArea } from "../styles/common";
+import { RailItem } from "../components/rail/rail.style";
+import Rail from "../components/rail/rail";
 
-const inter = Inter({ subsets: ["latin"] });
+/* Connect to the Sanity.io client */
 
 const client = createClient({
   projectId: "tjqwyy5h",
   dataset: "production",
-  apiVersion: "2023-01-07",
+  apiVersion: "2023-01-23",
   useCdn: false,
 });
 
-export default function Home() {
+interface HomeInterface {
+  trending: IMediaItem[];
+  recommended: IMediaItem[];
+}
+
+export default function Home({ trending, recommended }: HomeInterface) {
   const { data: session } = useSession();
   const { status } = useSession();
 
-  return (
+  return trending && recommended ? (
     <>
       <Head>
         <title>Create Next App</title>
@@ -27,8 +37,46 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <NavBar />
+        <CardArea>
+          <NavBar />
+          {trending && <Rail items={trending} />}
+        </CardArea>
       </main>
     </>
-  );
+  ) : null;
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const media = await client.fetch(`*[_type == "media"]`);
+
+  let trending: IMediaItem[] = media.filter(
+    (item: IMediaItem) => item.isTrending
+  );
+
+  let recommended = media
+    .filter((item: IMediaItem) => !item.isTrending)
+    .sort((a: IMediaItem, b: IMediaItem) => {
+      let x = a.title.toLowerCase();
+      let y = b.title.toLowerCase();
+      if (x < y) {
+        return -1;
+      }
+      if (x > y) {
+        return 1;
+      }
+      return 0;
+    });
+
+  if (!media) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      trending,
+      recommended,
+    },
+  };
+};
