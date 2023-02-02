@@ -17,6 +17,7 @@ import { useMediaQuery } from "../../../hooks/use-media-query";
 import IMediaItem from "../media-item";
 import { client } from "../../../utils/image-loader";
 import { useNextSanityImage } from "next-sanity-image";
+import { setBookMarkStatus } from "../../../utils/bookmark";
 
 interface TrendingCardProps {
   item: IMediaItem;
@@ -24,6 +25,7 @@ interface TrendingCardProps {
 
 const TrendingCard = ({ item }: TrendingCardProps) => {
   const [image, setImage] = useState("");
+  const [bookmark, setBookmark] = useState(false);
 
   const isSmall = useMediaQuery("(max-width: 767px )");
   const isLarge = useMediaQuery("(min-width: 768px)");
@@ -38,6 +40,10 @@ const TrendingCard = ({ item }: TrendingCardProps) => {
     }
   }, [isSmall, isLarge, item]);
 
+  useEffect(() => {
+    setBookmark(item.isBookmarked);
+  }, [item.isBookmarked]);
+
   const imageProps = useNextSanityImage(client, image);
 
   const renderCorrectCategory = () => {
@@ -46,6 +52,14 @@ const TrendingCard = ({ item }: TrendingCardProps) => {
     ) : (
       <img src="/assets/icon-category-tv.svg" alt="tv" />
     );
+  };
+
+  const handleBookMark = () => {
+    setBookMarkStatus(item._id, !bookmark).then(() => {
+      setBookmark(!bookmark);
+    }).catch(err => {
+      alert("Media could not be edited, please refresh the page and try again")
+    })
   };
 
   return (
@@ -62,9 +76,9 @@ const TrendingCard = ({ item }: TrendingCardProps) => {
         />
       )}
       <CardTextWrapper>
-        <CardBookmarkContaienr>
+        <CardBookmarkContaienr onClick={handleBookMark}>
           <BookmarkIcon>
-            {item.isBookmarked ? (
+            {bookmark ? (
               <img src="/assets/icon-bookmark-full.svg" alt="bookmark" />
             ) : (
               <img src="/assets/icon-bookmark-empty.svg" alt="bookmark" />

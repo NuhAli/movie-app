@@ -120,7 +120,7 @@ export const NavLink = styled(Link)`
   }
 `;
 
-export const SearchArea = styled(motion.div)`
+export const SearchArea = styled(motion.form)`
   position: absolute;
   top: 0;
   left: 0;
@@ -145,7 +145,7 @@ export const SearchInputWrapper = styled.div`
   padding-left: 24px;
 `;
 
-export const SearchAreaLarge = styled(motion.div)`
+export const SearchAreaLarge = styled(motion.form)`
   display: flex;
   align-items: flex-start;
   position: absolute;
@@ -192,6 +192,6 @@ export const SearchInput = styled.input`
   }
 
   &:focus {
-    border-bottom: 1px solid #5a698f;
+    border-bottom: 2px solid #5a698f;
   }
 `;

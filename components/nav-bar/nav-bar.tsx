@@ -11,18 +11,22 @@ import {
   SearchInput,
   SearchInputWrapper,
 } from "./nav-bar.styles";
-import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { data } from "./data";
 import { v4 as uuidv4 } from "uuid";
-import Home from "/assets/icon-nav-home.svg";
-import Movie from "/assets/icon-nav-movies.svg";
-import Shows from "/assets/icon-nav-tv-series.svg";
-import Bookmark from "/assets/icon-nav-bookmark.svg";
-import Search from "/assets/icon-search.svg";
 import { useMediaQuery } from "../../hooks/use-media-query";
 
-export const NavBar = () => {
+interface INavProps {
+  searchTerm: string;
+  handleChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  handleSearch: (e: React.FormEvent<HTMLFormElement>) => void;
+}
+
+export const NavBar = ({
+  searchTerm,
+  handleChange,
+  handleSearch,
+}: INavProps) => {
   const [searchVisible, setSearchVisible] = useState(false);
 
   const [searchVisibleLarge, setSearchVisibleLarge] = useState(false);
@@ -60,24 +64,28 @@ export const NavBar = () => {
       : { left: 0, opacity: 0 };
   };
 
-  useEffect(() => {
-    setSearchVisibleLarge(false)
-  },[isSmall])
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    handleSearch(e);
+    if (isLarge) {
+      setSearchVisibleLarge(false);
+    } else if (isSmall) {
+      setSearchVisible(false);
+    }
+  };
 
   useEffect(() => {
-    setSearchVisible(false)
-  },[isLarge])
+    setSearchVisibleLarge(false);
+  }, [isSmall]);
+
+  useEffect(() => {
+    setSearchVisible(false);
+  }, [isLarge]);
 
   return (
     <Nav>
       <NavWrapper>
         <NavIcon>
-          <img
-            alt="nav-icon"
-            src={"/assets/logo.svg"}
-            width={25}
-            height={20}
-          />
+          <img alt="nav-icon" src={"/assets/logo.svg"} width={25} height={20} />
         </NavIcon>
         <NavLinks>
           {renderNavLinks()}
@@ -109,6 +117,9 @@ export const NavBar = () => {
           animate={renderAnimation()}
           transition={{ ease: "easeOut", duration: 0.2 }}
           exit={{ display: "none" }}
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
         >
           <SearchInputWrapper>
             <img
@@ -117,7 +128,11 @@ export const NavBar = () => {
               width={24}
               height={24}
             />
-            <SearchInput placeholder="Search for movies or TV series" />
+            <SearchInput
+              placeholder="Search for movies or TV series"
+              onChange={handleChange}
+              value={searchTerm}
+            />
           </SearchInputWrapper>
         </SearchArea>
       )}
@@ -125,6 +140,9 @@ export const NavBar = () => {
         <SearchAreaLarge
           animate={renderLarge()}
           transition={{ ease: "easeOut", duration: 0.2 }}
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
         >
           <SearchInputWrapper>
             <img
@@ -133,7 +151,11 @@ export const NavBar = () => {
               width={24}
               height={24}
             />
-            <SearchInput placeholder="Search for movies or TV series" />
+            <SearchInput
+              placeholder="Search for movies or TV series"
+              onChange={handleChange}
+              value={searchTerm}
+            />
           </SearchInputWrapper>
         </SearchAreaLarge>
       )}

@@ -1,15 +1,13 @@
 import Head from "next/head";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { createClient } from "next-sanity";
 import IMediaItem from "../components/cards/media-item";
 import NavBar from "../components/nav-bar/nav-bar";
 import styles from "../styles/Home.module.css";
-import { GetServerSideProps, GetServerSidePropsResult, GetStaticProps } from "next";
-import { Card, CardArea } from "../styles/common";
-import { RailItem } from "../components/rail/rail.style";
+import { CardArea, GridArea } from "../styles/common";
 import Rail from "../components/rail/rail";
 import Grid from "../components/grid/grid";
+import { compareStrings } from "../utils/compareString";
 
 /* Connect to the Sanity.io client */
 
@@ -26,8 +24,25 @@ interface HomeInterface {
 }
 
 export default function Home({ trending, recommended }: HomeInterface) {
-  const { data: session } = useSession();
-  const { status } = useSession();
+  const [data, setData] = useState<IMediaItem[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResult, setSearchResult] = useState<IMediaItem[]>([]);
+  const [showResults, setShowResults] = useState(false);
+
+  useEffect(() => {
+    setData([...trending, ...recommended]);
+  }, [recommended, trending]);
+
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setSearchTerm(e.currentTarget.value);
+  };
+
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    let results = data.filter((item) => compareStrings(searchTerm, item.title));
+    setSearchResult(results)
+    setShowResults(true)
+  };
 
   return trending && recommended ? (
     <>
@@ -38,18 +53,31 @@ export default function Home({ trending, recommended }: HomeInterface) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-      <NavBar />
-        <CardArea>
-
-          {trending && <Rail items={trending} />}
-          {recommended && <Grid items={recommended} heading="Recommended for you"/>}
-        </CardArea>
+        <NavBar
+          searchTerm={searchTerm}
+          handleChange={handleChange}
+          handleSearch={handleSearch}
+        />
+        {!showResults ? (
+          <CardArea>
+            {trending && <Rail items={trending} />}
+            {recommended && (
+              <Grid items={recommended} heading="Recommended for you" />
+            )}
+          </CardArea>
+        ) : (
+          <GridArea>
+            {recommended && (
+              <Grid items={searchResult} heading={`Found ${searchResult.length} results`} />
+            )}
+          </GridArea>
+        )}
       </main>
     </>
   ) : null;
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps = async () => {
   const media = await client.fetch(`*[_type == "media"]`);
 
   let trending: IMediaItem[] = media
