@@ -3,12 +3,13 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { createClient } from "next-sanity";
 import IMediaItem from "../components/cards/media-item";
-import NavBar from "../components/NavBar/nav-bar";
+import NavBar from "../components/nav-bar/nav-bar";
 import styles from "../styles/Home.module.css";
-import { GetServerSideProps, GetServerSidePropsResult } from "next";
+import { GetServerSideProps, GetServerSidePropsResult, GetStaticProps } from "next";
 import { Card, CardArea } from "../styles/common";
 import { RailItem } from "../components/rail/rail.style";
 import Rail from "../components/rail/rail";
+import Grid from "../components/grid/grid";
 
 /* Connect to the Sanity.io client */
 
@@ -37,24 +38,22 @@ export default function Home({ trending, recommended }: HomeInterface) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+      <NavBar />
         <CardArea>
-          <NavBar />
+
           {trending && <Rail items={trending} />}
+          {recommended && <Grid items={recommended} heading="Recommended for you"/>}
         </CardArea>
       </main>
     </>
   ) : null;
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const media = await client.fetch(`*[_type == "media"]`);
 
-  let trending: IMediaItem[] = media.filter(
-    (item: IMediaItem) => item.isTrending
-  );
-
-  let recommended = media
-    .filter((item: IMediaItem) => !item.isTrending)
+  let trending: IMediaItem[] = media
+    .filter((item: IMediaItem) => item.isTrending)
     .sort((a: IMediaItem, b: IMediaItem) => {
       let x = a.title.toLowerCase();
       let y = b.title.toLowerCase();
@@ -66,6 +65,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
       }
       return 0;
     });
+
+  let recommended = media.filter((item: IMediaItem) => !item.isTrending);
 
   if (!media) {
     return {

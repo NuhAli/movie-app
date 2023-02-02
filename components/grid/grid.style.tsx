@@ -1,7 +1,6 @@
-import { motion } from "framer";
 import styled from "styled-components";
 
-export const RailItem = styled.div`
+export const GridContainer = styled.div`
   min-width: 100%;
   max-width: auto;
   height: auto;
@@ -13,22 +12,19 @@ export const RailItem = styled.div`
   justify-contnt: center;
   flex-direction: column;
   position: relative;
+
+  @media screen and (min-width: 768px) {
+    margin-left: 24px;
+  }
 `;
 
-export const RailWrapper = styled(motion.div)`
-  width: 100vw;
-  height: auto;
-  display: flex;
-  flex-direction : row
-  justify-content: flex-start;
-  overflow-x: visible ;
-`;
-
-export const RailTitle = styled.h2`
+export const GridTitle = styled.h2`
+  font-style: normal;
   font-weight: 300;
   font-size: 20px;
   line-height: 25px;
   letter-spacing: -0.3125px;
+  color: #ffffff;
   margin-bottom: 24px;
 
   @media screen and (min-width: 768px) {
@@ -36,4 +32,11 @@ export const RailTitle = styled.h2`
     line-height: 40px;
     letter-spacing: -0.5px;
   }
+`;
+
+export const GridArea = styled.div`
+  margin: 0 auto;
+  min-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 `;

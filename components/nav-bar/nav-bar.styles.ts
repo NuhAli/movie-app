@@ -62,6 +62,10 @@ export const NavIcon = styled.div`
     justify-content: center;
     align-items: center;
     cursor: pointer;
+
+    img {
+      fill-color: red;
+    }
 `;
 
 export const NavLinks = styled.div`
@@ -87,7 +91,17 @@ export const NavLinks = styled.div`
 export const NavLink = styled(Link)`
   margin-right: 24px;
   cursor: pointer;
-  padding: auto;
+
+  svg {
+    height: 16px;
+    width: 16px;
+    fill: #5a698f;
+    place-items: center center;
+    &:hover {
+      fill: white;
+    }
+  }
+
   &:hover {
     stroke: yellow;
   }
@@ -139,7 +153,7 @@ export const SearchAreaLarge = styled(motion.div)`
   left: 0px;
   height: 888px;
   width: 600px;
-  background: rgb(22, 29, 47,0.5);
+  background: rgb(22, 29, 47, 0.5);
   backdrop-filter: blur(10px);
   webkit-backdrop-filter: blur(10px);
   padding: 1rem 0.5rem;

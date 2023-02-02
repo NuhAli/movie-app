@@ -1,17 +1,19 @@
 import Head from "next/head";
-import Image from "next/image";
-import { createClient } from "next-sanity";
-import { FormEnum } from "../components/forms/form-enum";
-import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
-import Form from "../components/forms/form";
 import { signOut, useSession } from "next-auth/react";
-import { Button } from "../components/forms/form-style";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
-import NavBar from "../components/NavBar/nav-bar";
+import NavBar from "../components/nav-bar/nav-bar";
+import { GetServerSideProps } from "next";
+import { client } from "../utils/image-loader";
+import IMediaItem from "../components/cards/media-item";
+import Grid from "../components/grid/grid";
+import { CardArea, GridArea } from "../styles/common";
 
-export default function Movies() {
+interface MovieProps {
+  movies: Array<IMediaItem>;
+}
+
+export default function Movies({ movies }: MovieProps) {
   const { data: session } = useSession();
   const { status } = useSession();
 
@@ -25,7 +27,26 @@ export default function Movies() {
       </Head>
       <main className={styles.main}>
         <NavBar />
+        <GridArea>
+          {movies && <Grid items={movies} heading={"Movies"} />}
+        </GridArea>
       </main>
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const movies = await client.fetch(`*[category == "Movie"]`);
+
+  if (!movies) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      movies,
+    },
+  };
+};

@@ -42,9 +42,8 @@ export const BookmarkIcon = styled.div`
   height: 32px;
   width: 32px;
   border-radius: 50%;
-  background: #10141e;
+  background: rgba(16, 20, 30, 0.5);
   mix-blend-mode: normal;
-  opacity: 0.5;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -81,7 +80,7 @@ font-family: "Outfit",
   color: #ffffff;
 
   @media screen and (min-width: 768px) {
-    font-weight: bold;
+    font-weight: 500;
     font-size: 24px;
     line-height: 30px;
   }
@@ -92,7 +91,7 @@ export const CardDescription = styled.div`
   justify-content: flex-start;
 
   @media screen and (min-width: 768px) {
-    margin-bottom: 5px
+    margin-bottom: 5px;
   }
 `;
 

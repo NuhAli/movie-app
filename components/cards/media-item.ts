@@ -5,7 +5,7 @@ export default interface IMediaItem {
     _type: "media";
     _updatedAt: string;
     category: "TV Series" | "Movie";
-    isBookMarked: boolean;
+    isBookmarked: boolean;
     isTrending: boolean;
     rating: string;
     title: string;

@@ -57,13 +57,14 @@ const TrendingCard = ({ item }: TrendingCardProps) => {
           alt={item.title}
           width={isSmall ? 240 : 470}
           height={isSmall ? 140 : 230}
+          quality={100}
           priority
         />
       )}
       <CardTextWrapper>
         <CardBookmarkContaienr>
           <BookmarkIcon>
-            {item.isBookMarked ? (
+            {item.isBookmarked ? (
               <img src="/assets/icon-bookmark-full.svg" alt="bookmark" />
             ) : (
               <img src="/assets/icon-bookmark-empty.svg" alt="bookmark" />
