@@ -21,8 +21,8 @@ function Bookmarked({ movies, shows }: MovieProps) {
   const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
-    setData([...movies,...shows]);
-  }, []);
+    setData([...movies, ...shows]);
+  }, [movies,shows]);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     setSearchTerm(e.currentTarget.value);
@@ -67,9 +67,7 @@ function Bookmarked({ movies, shows }: MovieProps) {
           handleChange={handleChange}
           handleSearch={handleSearch}
         />
-        <GridArea>
-          {renderGrid()}
-        </GridArea>
+        <GridArea>{renderGrid()}</GridArea>
       </main>
     </>
   );

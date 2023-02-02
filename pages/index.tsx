@@ -8,15 +8,7 @@ import { CardArea, GridArea } from "../styles/common";
 import Rail from "../components/rail/rail";
 import Grid from "../components/grid/grid";
 import { compareStrings } from "../utils/compareString";
-
-/* Connect to the Sanity.io client */
-
-const client = createClient({
-  projectId: "tjqwyy5h",
-  dataset: "production",
-  apiVersion: "2023-01-23",
-  useCdn: false,
-});
+import { client } from "../utils/image-loader";
 
 interface HomeInterface {
   trending: IMediaItem[];
@@ -40,8 +32,8 @@ export default function Home({ trending, recommended }: HomeInterface) {
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let results = data.filter((item) => compareStrings(searchTerm, item.title));
-    setSearchResult(results)
-    setShowResults(true)
+    setSearchResult(results);
+    setShowResults(true);
   };
 
   return trending && recommended ? (
@@ -68,7 +60,10 @@ export default function Home({ trending, recommended }: HomeInterface) {
         ) : (
           <GridArea>
             {recommended && (
-              <Grid items={searchResult} heading={`Found ${searchResult.length} results`} />
+              <Grid
+                items={searchResult}
+                heading={`Found ${searchResult.length} results`}
+              />
             )}
           </GridArea>
         )}

@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../components/nav-bar/nav-bar";
 import { GetServerSideProps } from "next";
 import { client } from "../utils/image-loader";
@@ -30,8 +30,8 @@ export default function Movies({ movies }: MovieProps) {
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let results = data.filter((item) => compareStrings(searchTerm, item.title));
-    setSearchResult(results)
-    setShowResults(true)
+    setSearchResult(results);
+    setShowResults(true);
   };
 
   const renderGrid = () => {
@@ -56,10 +56,12 @@ export default function Movies({ movies }: MovieProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <NavBar searchTerm={searchTerm} handleChange={handleChange} handleSearch={handleSearch} />
-        <GridArea>
-          {renderGrid()}
-        </GridArea>
+        <NavBar
+          searchTerm={searchTerm}
+          handleChange={handleChange}
+          handleSearch={handleSearch}
+        />
+        <GridArea>{renderGrid()}</GridArea>
       </main>
     </>
   );

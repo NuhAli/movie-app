@@ -21,7 +21,7 @@ export default function Movies({ shows }: MovieProps) {
 
   useEffect(() => {
     setData(shows);
-  }, []);
+  }, [shows]);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     setSearchTerm(e.currentTarget.value);
@@ -61,9 +61,7 @@ export default function Movies({ shows }: MovieProps) {
           handleChange={handleChange}
           handleSearch={handleSearch}
         />
-        <GridArea>
-          {renderGrid()}
-        </GridArea>
+        <GridArea>{renderGrid()}</GridArea>
       </main>
     </>
   );
