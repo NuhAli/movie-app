@@ -18,6 +18,7 @@ import {
   Dot,
   CardTitle,
 } from "./grid-card.style";
+import { Overlay, IconContainer } from "../trending-card/trending-card.style";
 
 interface GridCardProps {
   item: IMediaItem;
@@ -30,6 +31,7 @@ const GridCard = ({ item }: GridCardProps) => {
   );
   const [image, setImage] = useState("");
   const [bookmark, setBookmark] = useState(false);
+  const [play, setPlay] = useState(false);
   const isSmall = useMediaQuery("(max-width: 767px )");
   const isMedium = useMediaQuery("(max-width: 1439px )");
   const isLarge = useMediaQuery("(min-width: 1440px )");
@@ -73,7 +75,7 @@ const GridCard = ({ item }: GridCardProps) => {
     if (bookmark) {
       setBookmarkIcon("/assets/icon-bookmark-full.svg");
     } else {
-      setBookmarkIcon("/assets/icon-bookmark-empty.svg")
+      setBookmarkIcon("/assets/icon-bookmark-empty.svg");
     }
   }, [bookmark]);
 
@@ -86,16 +88,36 @@ const GridCard = ({ item }: GridCardProps) => {
   };
 
   const handleBookMark = () => {
-    setBookMarkStatus(item._id, !bookmark).then(() => {
-      setBookmark(!bookmark);
-    }).catch(err => {
-      alert("Media could not be edited, please refresh the page and try again")
-    })
+    setBookMarkStatus(item._id, !bookmark)
+      .then(() => {
+        setBookmark(!bookmark);
+      })
+      .catch((err) => {
+        alert(
+          "Media could not be edited, please refresh the page and try again"
+        );
+      });
   };
 
+  const togglePlay = () => setPlay(!play);
+
   return (
-    <Card>
+    <Card
+      onMouseEnter={() => setPlay(true)}
+      onMouseLeave={() => setPlay(false)}
+    >
       <ImageContainer>
+      <Overlay animate={play ? { opacity: 1 } : { opacity: 0 }}>
+        <IconContainer>
+          <img
+            src="/assets/icon-play.svg"
+            alt="play-icon"
+            width={30}
+            height={30}
+          />
+          <span>Play</span>
+        </IconContainer>
+      </Overlay>
         <BookmarkIconContainer onClick={handleBookMark}>
           <img src={bookmarkIcon} alt="bookmark" />
         </BookmarkIconContainer>

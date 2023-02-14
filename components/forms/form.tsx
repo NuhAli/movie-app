@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import Image from "next/image";
 import { useSession, signIn } from "next-auth/react";
@@ -39,7 +40,7 @@ const Form = ({ type }: FormProps) => {
               signIn();
             }}
           >
-            <Image
+            <img
               src={"/assets/google.png"}
               width={25}
               height={25}
@@ -48,7 +49,7 @@ const Form = ({ type }: FormProps) => {
             Sign in with Google
           </ProviderButton>
           <ProviderButton onClick={() => signIn()}>
-            <Image
+            <img
               src={"/assets/github.png"}
               width={25}
               height={25}
@@ -67,7 +68,7 @@ const Form = ({ type }: FormProps) => {
       <>
         <FormTitle>Sign Up</FormTitle>
         <ProviderButton>
-          <Image
+          <img
             src={"/assets/google.png"}
             width={25}
             height={25}
@@ -76,7 +77,7 @@ const Form = ({ type }: FormProps) => {
           Sign up with Google
         </ProviderButton>
         <ProviderButton>
-          <Image
+          <img
             src={"/assets/github.png"}
             width={25}
             height={25}
@@ -95,7 +96,7 @@ const Form = ({ type }: FormProps) => {
   return (
     <FormWrapper>
       <FormIcon>
-        <Image
+        <img
           src={"/assets/logo.svg"}
           alt={"logo-image"}
           width={32}

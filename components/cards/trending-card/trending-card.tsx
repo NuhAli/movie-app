@@ -10,6 +10,8 @@ import {
   CardTextWrapper,
   CardTitle,
   Dot,
+  IconContainer,
+  Overlay,
   TrendingWrapper,
 } from "./trending-card.style";
 import { useMediaQuery } from "../../../hooks/use-media-query";
@@ -26,7 +28,7 @@ interface TrendingCardProps {
 const TrendingCard = ({ item }: TrendingCardProps) => {
   const [image, setImage] = useState("");
   const [bookmark, setBookmark] = useState(false);
-
+  const [play, setPlay] = useState(false);
   const isSmall = useMediaQuery("(max-width: 767px )");
   const isLarge = useMediaQuery("(min-width: 768px)");
 
@@ -55,15 +57,35 @@ const TrendingCard = ({ item }: TrendingCardProps) => {
   };
 
   const handleBookMark = () => {
-    setBookMarkStatus(item._id, !bookmark).then(() => {
-      setBookmark(!bookmark);
-    }).catch(err => {
-      alert("Media could not be edited, please refresh the page and try again")
-    })
+    setBookMarkStatus(item._id, !bookmark)
+      .then(() => {
+        setBookmark(!bookmark);
+      })
+      .catch((err) => {
+        alert(
+          "Media could not be edited, please refresh the page and try again"
+        );
+      });
   };
 
+  const togglePlay = () => setPlay(!play);
+
   return (
-    <TrendingWrapper>
+    <TrendingWrapper
+      onMouseEnter={() => setPlay(true)}
+      onMouseLeave={() => setPlay(false)}
+    >
+      <Overlay animate={play ? { opacity: 1 }: {opacity: 0}}>
+        <IconContainer>
+          <img
+            src="/assets/icon-play.svg"
+            alt="play-icon"
+            width={30}
+            height={30}
+          />
+          <span>Play</span>
+        </IconContainer>
+      </Overlay>
       {image && (
         <Image
           src={imageProps.src}

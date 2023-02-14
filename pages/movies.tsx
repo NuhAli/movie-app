@@ -2,7 +2,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
 import NavBar from "../components/nav-bar/nav-bar";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetStaticProps } from "next";
 import { client } from "../utils/image-loader";
 import IMediaItem from "../components/cards/media-item";
 import Grid from "../components/grid/grid";
@@ -67,7 +67,7 @@ export default function Movies({ movies }: MovieProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const movies = await client.fetch(`*[category == "Movie"]`);
 
   if (!movies) {

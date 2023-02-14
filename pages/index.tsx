@@ -72,7 +72,7 @@ export default function Home({ trending, recommended }: HomeInterface) {
   ) : null;
 }
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const media = await client.fetch(`*[_type == "media"]`);
 
   let trending: IMediaItem[] = media

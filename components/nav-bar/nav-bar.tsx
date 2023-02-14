@@ -55,13 +55,15 @@ export const NavBar = ({
   };
 
   const renderAnimation = () => {
-    return searchVisible ? { top: 80, opacity: 1 } : { top: 0, opacity: 0 };
+    return searchVisible
+      ? { top: 80, opacity: 1, display: "flex" }
+      : { top: 0, opacity: 0, display: "none" };
   };
 
   const renderLarge = () => {
     return searchVisibleLarge
-      ? { left: 96, opacity: 1 }
-      : { left: 0, opacity: 0 };
+      ? { left: 96, opacity: 1, display: "flex" }
+      : { left: 0, opacity: 0, display: "none" };
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -72,6 +74,8 @@ export const NavBar = ({
       setSearchVisible(false);
     }
   };
+
+  console.log(useSession());
 
   useEffect(() => {
     setSearchVisibleLarge(false);

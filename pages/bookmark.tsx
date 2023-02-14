@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import NavBar from "../components/nav-bar/nav-bar";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetStaticProps } from "next";
 import { client } from "../utils/image-loader";
 import IMediaItem from "../components/cards/media-item";
 import Grid from "../components/grid/grid";
