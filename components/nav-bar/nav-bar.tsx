@@ -15,6 +15,7 @@ import { useSession, signOut } from "next-auth/react";
 import { data } from "./data";
 import { v4 as uuidv4 } from "uuid";
 import { useMediaQuery } from "../../hooks/use-media-query";
+import { useRouter } from "next/router";
 
 interface INavProps {
   searchTerm: string;
@@ -35,6 +36,8 @@ export const NavBar = ({
 
   const { data: session } = useSession();
 
+  const router = useRouter();
+
   const isSmall = useMediaQuery("(max-width: 1440px )");
 
   const isLarge = useMediaQuery("(min-width: 1440px)");
@@ -43,7 +46,12 @@ export const NavBar = ({
     return data.map((link) => {
       return (
         <NavLink href={link.link} key={uuidv4()}>
-          <img alt={link.name} src={link.icon} height={16} width={16} />
+          <img
+            alt={link.name}
+            src={router.route === link.link ? link.iconActive : link.icon}
+            height={16}
+            width={16}
+          />
         </NavLink>
       );
     });

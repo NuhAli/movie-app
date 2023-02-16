@@ -42,7 +42,7 @@ export const IconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 
+  cursor: pointer;
   span {
     margin-left: 19px;
     font-style: normal;

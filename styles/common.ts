@@ -11,7 +11,7 @@ export const CardArea = styled.div`
   min-height: 100vh;
   max-height: auto;
   padding-top: 160px;
-
+  z-index: 2;
   @media screen and (min-width: 1440px) {
     padding-top: 15px;
     margin-left: 350px;
@@ -26,7 +26,7 @@ export const GridArea = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
+  z-index: 2;
   @media screen and (min-width: 768px) {
     padding-top: 200px;
   }

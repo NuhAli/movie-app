@@ -32,7 +32,16 @@ const Form = ({ type }: FormProps) => {
       return (
         <>
           <FormTitle>Login</FormTitle>
-          <ProviderButton onClick={() => signIn()}>
+          <ProviderButton type={"button"} onClick={() => signIn("google")}>
+            <img
+              src={"/assets/google.png"}
+              width={25}
+              height={25}
+              alt="google-logo"
+            />
+            Sign in with Google
+          </ProviderButton>
+          <ProviderButton type={"button"} onClick={() => signIn("github")}>
             <img
               src={"/assets/github.png"}
               width={25}

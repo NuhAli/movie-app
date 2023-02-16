@@ -102,7 +102,6 @@ export const ProviderButton = styled(Button)`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
 
   img {
     margin-right: 1rem;

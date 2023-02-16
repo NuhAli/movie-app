@@ -107,7 +107,7 @@ const GridCard = ({ item }: GridCardProps) => {
       onMouseLeave={() => setPlay(false)}
     >
       <ImageContainer>
-      <Overlay animate={play ? { opacity: 1 } : { opacity: 0 }}>
+      <Overlay  animate={play ? { opacity: 1 } : { opacity: 0 }}>
         <IconContainer>
           <img
             src="/assets/icon-play.svg"

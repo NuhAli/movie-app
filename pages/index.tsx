@@ -22,8 +22,7 @@ const LandingPage = () => {
       setTimeout(() => {
         router.push("/sign-in");
       }, 3000);
-    } 
-    else if(session.status === "authenticated") {
+    } else if (session.status === "authenticated") {
       router.push("/home");
     }
   }, [session]);
