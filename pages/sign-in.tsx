@@ -7,6 +7,20 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 const SignIn = () => {
+  const session = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      setTimeout(() => {
+        router.push("/sign-in");
+      }, 3000);
+    } 
+    else if(session.status === "authenticated") {
+      router.push("/home");
+    }
+  }, [session]);
+  
   return (
     <>
       <Head>

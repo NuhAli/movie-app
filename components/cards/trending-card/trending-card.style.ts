@@ -29,7 +29,6 @@ export const Overlay = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
-
   @media screen and (max-width: 1440px) {
     display: none;
   }
@@ -43,7 +42,7 @@ export const IconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  z-index: 
   span {
     margin-left: 19px;
     font-style: normal;

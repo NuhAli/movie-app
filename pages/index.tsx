@@ -20,8 +20,11 @@ const LandingPage = () => {
   useEffect(() => {
     if (session.status === "unauthenticated") {
       setTimeout(() => {
-        router.push("/sign-up");
+        router.push("/sign-in");
       }, 3000);
+    } 
+    else if(session.status === "authenticated") {
+      router.push("/home");
     }
   }, [session]);
 

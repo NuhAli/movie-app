@@ -11,7 +11,7 @@ import {
   SearchInput,
   SearchInputWrapper,
 } from "./nav-bar.styles";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { data } from "./data";
 import { v4 as uuidv4 } from "uuid";
 import { useMediaQuery } from "../../hooks/use-media-query";
@@ -29,6 +29,8 @@ export const NavBar = ({
 }: INavProps) => {
   const [searchVisible, setSearchVisible] = useState(false);
 
+  const [image, setImage] = useState("");
+
   const [searchVisibleLarge, setSearchVisibleLarge] = useState(false);
 
   const { data: session } = useSession();
@@ -36,13 +38,6 @@ export const NavBar = ({
   const isSmall = useMediaQuery("(max-width: 1440px )");
 
   const isLarge = useMediaQuery("(min-width: 1440px)");
-
-  const renderProfileImage = () => {
-    if (session?.user) {
-      return session.user.image;
-    }
-    return "assets/iamge-avatar.png";
-  };
 
   const renderNavLinks = () => {
     return data.map((link) => {
@@ -105,13 +100,16 @@ export const NavBar = ({
             />
           </NavIcon>
         </NavLinks>
-        <NavIcon>
-          <img
-            alt="nav-icon"
-            src={"/assets/image-avatar.png"}
-            width={24}
-            height={24}
-          />
+        <NavIcon onClick={() => signOut()}>
+          {session?.user?.image && (
+            <img
+              alt="nav-icon"
+              src={session.user.image}
+              width={24}
+              height={24}
+              className="profile"
+            />
+          )}
         </NavIcon>
       </NavWrapper>
       {isSmall && (

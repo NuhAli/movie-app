@@ -2,12 +2,14 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
 import NavBar from "../components/nav-bar/nav-bar";
-import { GetServerSideProps, GetStaticProps } from "next";
+import { GetStaticProps } from "next";
 import { client } from "../utils/image-loader";
 import IMediaItem from "../components/cards/media-item";
 import Grid from "../components/grid/grid";
 import { GridArea } from "../styles/common";
 import { compareStrings } from "../utils/compareString";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 interface MovieProps {
   movies: Array<IMediaItem>;
@@ -18,6 +20,17 @@ export default function Movies({ movies }: MovieProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState<IMediaItem[]>([]);
   const [showResults, setShowResults] = useState(false);
+  const session = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      router.push("/sign-in");
+    } 
+    else if(session.status === "authenticated") {
+      router.push("/movies");
+    }
+  }, [session]);
 
   useEffect(() => {
     setData(movies);

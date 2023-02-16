@@ -44,6 +44,7 @@ export const NavWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   z-index: 3;
+
   @media screen and (min-width: 1440px) {
     height: 100%;
     width: auto;
@@ -65,6 +66,11 @@ export const NavIcon = styled.div`
 
     img {
       fill-color: red;
+    }
+
+    .profile {
+      border-radius: 50% ;
+      border: 2px solid #fc4747;
     }
 `;
 

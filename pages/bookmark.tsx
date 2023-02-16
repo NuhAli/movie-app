@@ -8,7 +8,8 @@ import Grid from "../components/grid/grid";
 import { GridArea } from "../styles/common";
 import { useEffect, useState } from "react";
 import { compareStrings } from "../utils/compareString";
-
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 interface MovieProps {
   movies: Array<IMediaItem>;
   shows: Array<IMediaItem>;
@@ -19,6 +20,18 @@ function Bookmarked({ movies, shows }: MovieProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState<IMediaItem[]>([]);
   const [showResults, setShowResults] = useState(false);
+
+  const session = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      router.push("/sign-in");
+    } 
+    else if(session.status === "authenticated") {
+      router.push("/bookmark");
+    }
+  }, [session]);
 
   useEffect(() => {
     setData([...movies, ...shows]);

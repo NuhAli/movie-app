@@ -8,6 +8,8 @@ import IMediaItem from "../components/cards/media-item";
 import Grid from "../components/grid/grid";
 import { GridArea } from "../styles/common";
 import { compareStrings } from "../utils/compareString";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 interface MovieProps {
   shows: Array<IMediaItem>;
@@ -18,6 +20,17 @@ export default function Movies({ shows }: MovieProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState<IMediaItem[]>([]);
   const [showResults, setShowResults] = useState(false);
+  const session = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      router.push("/sign-in");
+    } 
+    else if(session.status === "authenticated") {
+      router.push("/shows");
+    }
+  }, [session]);
 
   useEffect(() => {
     setData(shows);
@@ -46,6 +59,17 @@ export default function Movies({ shows }: MovieProps) {
       return <Grid items={shows} heading={"TV Series"} />;
     }
   };
+
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      setTimeout(() => {
+        router.push("/sign-in");
+      }, 3000);
+    } 
+    else if(session.status === "authenticated") {
+      router.push("/home");
+    }
+  }, [session]);
 
   return (
     <>

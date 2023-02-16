@@ -43,7 +43,10 @@ export default function Home({ trending, recommended }: HomeInterface) {
 
   useEffect(() => {
     if (session.status === "unauthenticated") {
-      router.push("/sign-up")
+      router.push("/sign-in");
+    } 
+    else if(session.status === "authenticated") {
+      router.push("/home");
     }
   }, [session]);
 

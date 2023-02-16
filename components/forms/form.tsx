@@ -1,10 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import Image from "next/image";
-import { useSession, signIn } from "next-auth/react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { signIn } from "next-auth/react";
 import { FormEnum } from "./form-enum";
-import { DevTool } from "@hookform/devtools";
 import {
   Button,
   FormArea,
@@ -28,26 +26,12 @@ interface FormDetails {
 }
 
 const Form = ({ type }: FormProps) => {
-  const { data: session } = useSession();
   
   const renderForm = () => {
     if (type === FormEnum.SIGNIN) {
       return (
         <>
           <FormTitle>Login</FormTitle>
-          <ProviderButton
-            onClick={() => {
-              signIn();
-            }}
-          >
-            <img
-              src={"/assets/google.png"}
-              width={25}
-              height={25}
-              alt="google-logo"
-            />
-            Sign in with Google
-          </ProviderButton>
           <ProviderButton onClick={() => signIn()}>
             <img
               src={"/assets/github.png"}
