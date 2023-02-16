@@ -142,7 +142,15 @@ export const SearchInputWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   min-width: 100%;
-  padding-left: 24px;
+  background: #161d2f;
+  padding-left: 16px;
+  @media (min-width: 768px) {
+    border-radius: 10px;
+  }
+
+  @media screen and (min-width: 1440px) {
+      background: unset;
+    }
 `;
 
 export const SearchAreaLarge = styled(motion.form)`
@@ -189,9 +197,5 @@ export const SearchInput = styled.input`
       font-size: 24px;
       line-height: 30px;
     }
-  }
-
-  &:focus {
-    border-bottom: 2px solid #5a698f;
   }
 `;

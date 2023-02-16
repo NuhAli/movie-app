@@ -1,3 +1,4 @@
+import { motion } from "framer";
 import styled from "styled-components";
 
 export const CardArea = styled.div`
@@ -17,9 +18,8 @@ export const CardArea = styled.div`
   }
 `;
 
-
 export const GridArea = styled.div`
-  width: 100vw; 
+  width: 100vw;
   min-height: 100vh;
   padding: 160px 0;
   display: flex;
@@ -35,4 +35,30 @@ export const GridArea = styled.div`
     padding-top: 30px;
     margin-left: 165px;
   }
-`
+`;
+
+export const LogoArea = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  
+`;
+
+export const PageTitle = styled(motion.div)`
+  margin-top: 3rem;
+  color: white;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+
+  @media (min-width: 768px) {
+    font-size: 45px
+  }
+`;

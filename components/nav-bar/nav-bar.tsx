@@ -75,8 +75,6 @@ export const NavBar = ({
     }
   };
 
-  console.log(useSession());
-
   useEffect(() => {
     setSearchVisibleLarge(false);
   }, [isSmall]);
