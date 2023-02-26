@@ -6,5 +6,5 @@ export const client = createClient({
     dataset: "production",
     apiVersion: "2023-01-23",
     token: process.env.NEXT_PUBLIC_SANITY_TOKEN,
-    useCdn: false,
+    useCdn: process.env.NODE_ENV === "production",
 });

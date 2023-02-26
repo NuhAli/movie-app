@@ -30,7 +30,7 @@ const SignIn = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Form type={FormEnum.SIGNIN}></Form>
+        <Form></Form>
       </main>
     </>
   );
