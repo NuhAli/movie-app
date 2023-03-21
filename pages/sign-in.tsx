@@ -2,7 +2,6 @@ import Head from "next/head";
 import React, { useEffect } from "react";
 import Form from "../components/forms/form";
 import styles from "../styles/Home.module.css";
-import { FormEnum } from "../components/forms/form-enum";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
